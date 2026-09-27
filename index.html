@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <!-- Standar Encoding UTF-8 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayo Kenali Suku Boti!</title>
+
+    <style>
+        .text-justify {
+            text-align: justify;
+            margin-bottom: 1rem;
+        }
+        .list-sejajar-lengkap {
+            list-style: none;
+            padding-left: 0;   
+            margin-left: 0;
+        }
+        .list-sejajar-lengkap li {
+            display: flex;
+            margin-bottom: 12px;
+        }
+        .list-sejajar-lengkap .nomor {
+            min-width: 20px;   
+            font-weight: bold;
+        }
+        .list-sejajar-lengkap .isi-teks {
+            text-align: justify;
+            flex: 1;
+        }
+    </style>
+    
+    <!-- Tipografi WCAG AAA & Font Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Kontras Tinggi Berstandar WCAG AAA (Rasio minimum 7:1) */
+        :root {
+            --primary-dark: #121212;     /* Latar Gelap WCAG */
+            --accent-red: #8B0000;        /* Merah Marun Etnik */
+            --accent-gold: #D4AF37;       /* Emas Adat */
+            --bg-light: #FFFFFF;          /* Latar Kontras Tinggi */
+            --text-dark: #111111;         /* Teks Hitam Pekat */
+            --text-light: #FFFFFF;        /* Teks Putih Pekat */
+            --focus-outline: #2563EB;     /* Aksesibilitas Fokus Navigasi */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.8;
+            font-size: 18px; /* Ukuran Teks WCAG Readability */
+        }
+
+        h1, h2, h3 {
+            font-family: 'Merriweather', serif;
+        }
+
+        /* 1. PENANGKAL DISORIENTASI: Top Bar & Navigasi Permanen */
+        header {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--accent-gold);
+        }
+
+        .brand-logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        nav a:hover, nav a:focus {
+            background-color: var(--accent-red);
+            outline: 3px solid var(--focus-outline);
+        }
+
+        /* 2. PENANGKAL DISORIENTASI: Breadcrumb Trail */
+        .breadcrumb-container {
+            background-color: #E5E7EB;
+            padding: 10px 5%;
+            font-size: 0.95rem;
+        }
+
+        .breadcrumb {
+            list-style: none;
+            display: flex;
+            gap: 8px;
+        }
+
+        .breadcrumb li+li:before {
+            content: "/\00a0";
+            color: #6B7280;
+        }
+
+        .breadcrumb a {
+            color: var(--accent-red);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Layar Utama & Konten */
+        main {
+            padding: 40px 5%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .hero-banner {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://awsimages.detik.net.id/community/media/visual/2019/10/17/eb7bf7bf-1064-43b5-a62b-21ab8e07a70e_169.jpeg?w=650&q=90') center/cover;
+            color: var(--text-light);
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .hero-banner h1 {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        /* Simpul (Node) Kebudayaan */
+        .node-section {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px;
+        }
+
+        .node-title {
+            color: var(--accent-red);
+            border-bottom: 3px solid var(--accent-gold);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Galeri Grid / Visual Card */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            border: 2px solid #D1D5DB;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #FFF;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-body h3 {
+            color: var(--accent-red);
+            margin-bottom: 10px;
+        }
+
+        /* Fitur Integrasi AI Accessibilitas (Simpul Audio & OCR) */
+        .ai-widget {
+            background-color: #F3F4F6;
+            border-left: 6px solid var(--accent-red);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+
+        .btn-ai {
+            background-color: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .btn-ai:hover, .btn-ai:focus {
+            background-color: var(--primary-dark);
+            outline: 3px solid var(--focus-outline);
+        }
+
+        /* Peta Situs / Sitemap (Penangkal Disorientasi Navigasi) */
+        .sitemap-box {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 40px;
+        }
+
+        .sitemap-box a {
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+
+        .sitemap-box a:hover {
+            text-decoration: underline;
+        }
+
+        .sitemap-tree ul {
+            margin-left: 20px;
+            list-style-type: square;
+        }
+
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+            border-top: 4px solid var(--accent-gold);
+        }
+
+        /* Floating Home Button (Lost in Hyperspace Prevention) */
+        .btn-floating-home {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-gold);
+            color: var(--primary-dark);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            text-decoration: none;
+            z-index: 999;
+        }
+
+        .btn-floating-home:focus {
+            outline: 4px solid var(--focus-outline);
+        }
+        /* Container Video Responsif (Rasio 16:9) */
+/* Styling Khusus Pemutar Video Responsif (Rasio 16:9) */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* Rasio 16:9 */
+    height: 0;
+    overflow: hidden;
+    background: #000;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigasi Permanen / Header -->
+    <header id="top">
+        <a href="#top" class="brand-logo" aria-label="Beranda Suku Boti">
+            <i class="fa-solid fa-landmark"></i>JELAJAHI BUDAYA LOKAL 
+        </a>
+        <nav aria-label="Navigasi Utama">
+            <ul>
+                <li><a href="#node-profil">Profil</a></li>
+                <li><a href="#node-falsafah">Falsafah</a></li>
+                <li><a href="#node-galeri">Galeri Motif</a></li>
+                <li><a href="#node-audio">Bahasa & AI</a></li>
+                <li><a href="#node-peta">Peta Interaktif</a></li>
+                <li><a href="#sitemap-section">Sitemap</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb Trail (Navigasi Non-Linier) -->
+    <div class="breadcrumb-container" aria-label="Jejak Navigasi">
+        <ul class="breadcrumb">
+            <li><a href="#top">Beranda</a></li>
+            <li>Kabupaten TTS</li>
+            <li>Suku Boti</li>
+            <li id="current-node-label">Simpul Aktif: Profil</li>
+        </ul>
+    </div>
+
+    <!-- Tombol Home Melayang (Pencegah Lost in Hyperspace) -->
+    <a href="#top" class="btn-floating-home" title="Kembali ke Atas/Home" aria-label="Kembali ke Beranda">
+        <i class="fa-solid fa-house"></i>
+    </a>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-banner">
+            <h1>Kebudayaan Suku Boti</h1>
+            <p>Kabupaten Timor Tengah Selatan (TTS), Nusa Tenggara Timur</p>
+            <p><small>Sistem Informasi Hypermedia Interaktif & Aksesibel</small></p>
+            <hr>
+            <p><em>Menjelajahi kearifan lokal, tradisi hailaka dan warisan budaya yang masih lestari hingga kini.</em></p>
+        </section>
+
+        <!-- 1: PROFIL SUKU BOTI -->
+        <section id="node-profil" class="node-section">
+            <h2 class="node-title"><i class="fa-solid fa-users"></i> Simpul 1: Profil Suku Boti</h2>
+            <p class="text-justify">
+               Asal-Usul dan Sejarah Keturunan Asli Suku Boti di yakini sebagai salah satu komunitas tertua dan keturunan langsung suku asli Pulau Timor. Kerajaan Terakhir: Wilayah 
+               ini dikenal sebagai desa adat yang mempertahankan sistem pemerintahan tradisional dipimpin oleh seorang raja atau Usif.<br><br>
+               Keterasingan Geografis: Letaknya yang berada di kawasan perbukitan terpencil (sekitar 40 km dari Kota Soe) membuat suku ini relatif terlindungi dari arus modernisasi Suku Boti adalah komunitas adat di Kecamatan 
+               Boti, Kabupaten Timor Tengah Selatan (TTS), NTT. Terbagi menjadi Boti Luar dan Boti Dalam, Suku Boti Dalam di kenal sangat teguh mempertahankan gaya hidup tradisional, 
+               menolak modernisasi teknologis yang merusak alam, dan di pimpin oleh seorang "Raja Boti (Usif)".
+               Pembagian Kelompok masyarakat masyarakat Boti terbagi menjadi dua bagian utama yang di batasi oleh aturan keyakinan dan tempat tinggal:     
+            <ol class="list-sejajar-lengkap">
+            <li>
+        <span class="nomor-normal">1.</span>
+        <div class="isi-teks">
+                Boti Dalam: Kelompok yang tetap teguh menjalankan tradisi leluhur dan tinggal di area khusus berpagar kayu. Jumlah warganya sekitar 300-an jiwa.
+         </div>
+    </li>
+    <li>
+        <span class="nomor-normal">2.</span>
+        <div class="isi-teks">
+                Boti Luar: Kelompok warga yang telah memeluk agama formal (seperti Kristen Protestan) dan beradaptasi dengan administrasi pemerintahan moderen.
+            </p>                           
+        </section>
+        <!-- 2: FALSAFAH HIDUP & KEBUDAYAAN -->
+<section id="node-falsafah" class="node-section">
+    <h2 class="node-title"><i class="fa-solid fa-book-open"></i> Simpul 2: Falsafah Hidup & Kepercayaan (Halaika)</h2>
+    
+    <p class="text-justify">
+        Masyarakat Boti menganut kepercayaan <strong>Halaika</strong>. Mereka meyakini <em>Uis Neno</em> (Dewa Langit/Pencipta) dan <em>Uis Nifno</em> (Dewa Bumi/Pemelihara). Kehidupan sosial disandarkan pada prinsip gotong royong, kedamaian, dan tidak menghukum pencuri melainkan memberi mereka modal agar tidak mencuri lagi. Falsafah hidup Suku Boti berakar pada prinsip keseimbangan, kesederhanaan, dan penghormatan penuh terhadap alam.
+        Hubungan ini tercermin dalam cara mereka memandang kehidupan melalui keyakinan Halaika.
+    </p>
+    <ol class="list-sejajar-lengkap">
+    <li>
+        <span class="nomor-normal">1.</span>
+        <div class="isi-teks">
+            Dua Penguasa Dunia: Mereka percaya pada dua penguasa, yaitu Uis Neno (Tuhan Langit) yang menjaga kehidupan rohani/spiritual, dan Uis Afu (Tuhan Bumi) yang menyediakan makanan, air, dan kesuburan untuk kehidupan jasmani.
+        </div>
+    </li>
+    <li>
+        <span class="nomor-normal">2.</span>
+        <div class="isi-teks">
+             Alam Sebagai Ibu: Bagi masyarakat Boti, bumi adalah ibu yang menyusui dan memberi makan manusia. Oleh karena itu, merusak alam 
+            (seperti menebang pohon sembarangan atau mengeksploitasi tanah) dianggap sebagai dosa besar dan pelanggaran adat.
+        </div>
+    </li>
+</ol>
+
+        <!--3: GALERI MOTIF, RUMAH ADAT, BUSANA & KULINER -->
+        <section id="node-galeri" class="node-section">
+            <h2 class="node-title"><i class="fa-solid fa-image"></i> Simpul 3: Galeri Kebudayaan & Motif Tenun</h2>
+            
+            <div class="gallery-grid">
+                <!-- Rumah Adat -->
+                <article class="card">
+                    <img src="rumah-adat-lopo.JPG" alt="Rumah Adat Lopo dan Ume Kebubu Suku Boti">
+                    <img src="rumah-adat-lopo1.jpg" alt="Rumah Adat Lopo dan Ume Kebubu Suku Boti">
+                    <div class="card-body">
+                        <h3>Rumah Adat (Lopo & Ume Kebubu)</h3>
+                        <p class="text-justify"><strong>Lopo</strong> berfungsi sebagai tempat musyawarah dan menerima tamu. <strong>Ume Kebubu</strong> adalah 
+                            rumah bulat beratap alang-alang tempat memasak dan menyimpan hasil panen. Sedangkan untuk laki-laki disebut Beti Ma'u. Dibutuhkan waktu 
+                            2 sampai 4 pekan untuk menghasilkan satu pakaian adat ukuran dewasa. </p>
+                    </div>
+                </article>
+
+                <!-- Pakaian Adat -->
+                <article class="card">
+                    <img src="pakaian-adat.jpg" alt="Pakaian Adat Tradisional Suku Boti">
+                    <div class="card-body">
+                        <h3>Pakaian Adat Tradisional</h3>
+                        <p class="text-justify">Pakaian adat untuk wanita dari Suku Boti (suku tradisional di Timor Tengah Selatan, NTT) disebut dengan nama Tais, 
+                            Sedangkan untuk laki-laki disebut Beti Ma'u. <br><br>Saat acara-acara khusus, Pakaian adat biasanya dilengkapi dengan aksesoris seperti aol noni 
+                            (tempat sirih pinang yang terbuat dari muti), suni (pedang yang digunakan oleh laki-laki), pilut (ikat kepala bagi laki-laki sebagai 
+                            tanda kehormatan), dan kil' noni (sisir kepala yang terbuat dari perak dan digunakan oleh perempuan).
+                </article>
+
+                <!-- Kain Tenun -->
+                <article class="card">
+                    <img src="tenun-ikat3.JPG" alt="Kain Tenun Ikat Motif Khas Boti TTS">
+                    <img src="tenun-ikat1.jpg" alt="Kain Tenun Ikat Motif Khas Boti TTS">
+
+                    <div class="card-body">
+                        <h3>Kain Tenunan & Motif Khas</h3>
+                        <p class="text-justify">Tenun ikat dibuat dari benang kapas buatan sendiri dan pewarna alami (akar/daun). Dibutuhkan waktu 2 sampai 4 pekan 
+                            untuk menghasilkan satu pakaian adat ukuran dewasa. Motif melambangkan flora, fauna, dan keseimbangan alam Timor. Ini sudah termasuk 
+                            mengolah kapas menjadi benang, pewarnaan benang, mengikat benang menjadi motif, menenun, dan menjahit.</p>
+                    </div>
+                </article>
+
+             <!-- Kartu Khusus Video Tarian Suku Boti -->
+<article class="card">
+    <div class="video-container">
+        <iframe 
+            src="https://www.youtube.com/embed/JgnVSRzJOKg" 
+            title="Tarian Timor suku BOTI" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    <div class="card-body">
+        <h3>Tarian Tradisional</h3>
+        <p class="text-justify"> Tari Swo Ma Eka(Perang):Merupakan tarian kemenangan perang atau tarian penyambutan tamu agung. Tarian ini ditarikan oleh pria dan wanita dengan gerakan dinamis sebagai bentuk penghormatan mendalam dan penyemangat bagi para pemuda. Pertunjukan tarian adat khas Suku Boti dengan balutan busana tenun ikat tradisional di halaman rumah adat Ume Kebubu</p>
+    </div>
+</article>
+    
+                <!-- Makanan Khas -->
+                <article class="card">
+                    <img src="jagung-bose.jpg" alt="Kain Tenun Ikat Motif Khas Boti TTS">
+                    
+                    <div class="card-body">
+                        <h3>Makanan Khas</h3>
+                        <p class="text-justify">Makanan pokok dan khas Suku Boti di Pulau Timor, Nusa Tenggara Timur, bersumber dari hasil ladang tradisional mereka 
+                            seperti umbi-umbian dan jagung. Berikut adalah beberapa makanan tradisional Suku Boti:</p>
+    <ol class="list-sejajar-lengkap">
+    <li>
+        <span class="nomor-normal">1.</span>
+        <div class="isi-teks">
+            Laok Hau: Ubi kayu atau singkong yang direbus maupun dibakar.
+        </div>
+    </li>
+    <li>
+        <span class="nomor-normal">2.</span>
+        <div class="isi-teks">
+            Laok Loll:  Ubi jalar rebus yang sering dikonsumsi sehari-hari.
+        </div>
+    </li>
+    <li>
+    <span class="nomor-normal">3.</span>
+        <div class="isi-teks">
+           Jagung Bose:  Olahan jagung pipil yang dimasak lunak bersama kacang-kacangan lokal seperti kacang arbilah.
+        </div>
+    </li>
+    <li>
+        <span class="nomor-normal">4.</span>
+        <div class="isi-teks">
+            Jagung Katemak: Masakan kuah yang memadukan jagung, kacang-kacangan, dan labu atau sayuran lokal.
+        </div>
+    </li>
+    <li>
+        <span class="nomor-normal">5.</span>
+        <div class="isi-teks">
+            Kue Jagung: Masakan kuah yang memadukan jagung, kacang-kacangan, dan labu atau sayuran lokal.
+        </div>
+    </li>
+    <li>
+        <span class="nomor-normal">6.</span>
+        <div class="isi-teks">
+            Laok Loll:  Ubi jalar rebus yang sering dikonsumsi sehari-hari.
+        </div>
+    </li>
+</ol>
+   </div>
+        </article>
+            <article class="card">
+    <!-- Opsi 1: Jika menggunakan foto/ikon gambar -->
+    <img src="tenun.htm" alt="Bahasa Daerah Uab Meto Suku Boti">
+
+    <div class="card-body">
+        <h3>Bahasa Daerah (Uab Meto)</h3>
+        <pstyle="text-align: justify;">
+            Masyarakat Suku Boti menggunakan bahasa ibu <strong>Uab Meto (Dawan)</strong>  Dalam kehidupan sehari-hari</p>
+        <p style="text-align: justify;">
+            baik dalam kegiatan adat, ritual keagamaan, dan percakapan sehari-hari. Dua Penguasa Dunia Mereka percaya pada dua penguasa, yaitu Uis Neno (Tuhan Langit) yang menjaga kehidupan rohani/spiritual, dan Uis Afu (Tuhan Bumi) yang menyediakan makanan, air, dan kesuburan untuk kehidupan jasmani.<br><br>Alam Sebagai Ibu Bagi masyarakat Boti, bumi adalah ibu yang menyusui dan memberi makan manusia. Oleh karena itu, merusak alam (seperti menebang pohon sembarangan atau mengeksploitasi tanah) dianggap sebagai dosa besar dan pelanggaran adat.Sementara itu, masyarakat Boti Luar menggunakan bahasa Indonesia, terutama saat berhubungan dengan masyarakat dari luar desa. Meski begitu, masyarakat Boti Luar juga menggunakan bahasa Dawan dalam percakapan sehari-hari dengan masyarakat kampung.</p>
+
+        </div>
+        </section>
+
+        <!--4: AUDIO BAHASA LOKAL & INTEGRASI AI -->
+        <section id="node-audio" class="node-section">
+            <h2 class="node-title"><i class="fa-solid fa-language"></i> Simpul 4: Bahasa Lokal & Aksesibilitas AI</h2>
+            <p>Masyarakat Boti berkomunikasi dalam bahasa ibu <strong>Uab Meto (Dawan)</strong>.</p>
+            
+            <!-- Simulasi Integrasi AI (TTS & Penerjemah NMT) -->
+            <div class="ai-widget">
+                <h3><i class="fa-solid fa-robot"></i> Integrasi AI Aksesibilitas (Text-To-Speech & NMT)</h3>
+                <p>Uji coba sintesis suara AI untuk membaca teks adat Boti dalam Bahasa Indonesia & terjemahan lisan Uab Meto:</p>
+                <p id="speech-text" style="font-weight: bold; margin-top: 10px;">
+                    "Berikut adalah beberapa kosakata dasar dalam Bahasa Dawan (Uab Meto) yang sering digunakan dalam percakapan sehari-hari di wilayah Timor Tengah Selatan: Angka: Satu:Mese, Dua:Nua, Tiga:Tenu, Empat:Ha, Lima:Nima
+                 Kata Ganti & Sapaan Saya: Au:Kamu, Ho:Dia, In:Kita/Kami, Hit/Kaim, Bapak:Amaf, Ibu:Enaaf, Au ngak:Nama saya adalah."
+                </p>
+                
+                <button class="btn-ai" onclick="playAITextToSpeech()">
+                    <i class="fa-solid fa-volume-high"></i> Putar Suara AI (Text-to-Speech)
+                </button>
+            </div>
+        </section>
+
+        <!-- SIMPUL 5: PETA INTERAKTIF -->
+        <section id="node-peta" class="node-section">
+    <h2 class="node-title"><i class="fa-solid fa-map-location-dot"></i> Simpul 5: Peta Interaktif Boti, TTS</h2>
+    <p>Lokasi Geografis Suku (Desa) Boti terletak di Kecamatan Ki'e, Kabupaten Timor Tengah Selatan (TTS), Provinsi Nusa Tenggara Timur (NTT).</p>
+
+    <div style="margin-top: 15px; border-radius: 8px; overflow: hidden; border: 2px solid #D1D5DB;">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62867.73489814402!2d124.5200!3d-9.8750!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2c5601d3cbffffff%3A0x0!2sBoti%2C%20Ki'e%2C%20South%20Timor%20Central%20Regency%2C%20East%20Nusa%20Tenggara!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+            width="100%" 
+            height="350" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</section>
+            </div>
+        </section>
+
+        <!-- SITEMAP / PETA SITUS PERMANEN (Persyaratan No. 2) -->
+        <section id="sitemap-section" class="sitemap-box">
+            <h2><i class="fa-solid fa-sitemap"></i> Peta Situs (Sitemap)</h2>
+            <p>Gunakan sitemap ini untuk berpindah simpul secara langsung tanpa disorientasi:</p>
+            <br>
+            <div class="sitemap-tree">
+                <ul>
+                    <li><a href="#top">Halaman Beranda (Home)</a>
+                        <ul>
+                            <li><a href="#node-profil">Simpul 1: Profil Suku Boti</a></li>
+                            <li><a href="#node-falsafah">Simpul 2: Falsafah & Kepercayaan (Halaika)</a></li>
+                            <li><a href="#node-galeri">Simpul 3: Galeri Kebudayaan & Motif</a>
+                                <ul>
+                                    <li><a href="#node-galeri">Rumah Adat (Lopo/Ume Kebubu)</a></li>
+                                    <li><a href="#node-galeri">Pakaian Adat Tradisional</a></li>
+                                    <li><a href="#node-galeri">Kain Tenun Ikat</a></li>
+                                    <li><a href="#node-galeri">Makanan Khas (Jagung Bose)</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#node-audio">Simpul 4: Bahasa Uab Meto & Modul AI Aksesibilitas</a></li>
+                            <li><a href="#node-peta">Simpul 5: Peta Geografis Interaktif</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026  Perancangan Arsitektur Hypermedia </p>
+    </footer
+
+    <!-- JavaScript Interaktif AI & Navigasi -->
+    <script>
+        // 1. Integrasi AI Text-To-Speech (Web Speech API)
+        function playAITextToSpeech() {
+            const textToRead = document.getElementById("speech-text").innerText;
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(textToRead);
+                utterance.lang = 'id-ID';
+                speechSynthesis.speak(utterance);
+            } else {
+                alert("Fitur AI Text-to-Speech tidak didukung di browser ini.");
+            }
+        }
+
+        // 2. Dynamic Breadcrumb Update (Penangkal Lost in Hyperspace)
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.node-section');
+            const breadcrumbLabel = document.getElementById('current-node-label');
+            
+            sections.forEach(sec => {
+                const top = window.scrollY;
+                const offset = sec.offsetTop - 150;
+                const height = sec.offsetHeight;
+                const id = sec.getAttribute('id');
+                
+                if (top >= offset && top < offset + height) {
+                    const titleText = sec.querySelector('.node-title').innerText;
+                    breadcrumbLabel.innerText = "Simpul Aktif: " + titleText;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
